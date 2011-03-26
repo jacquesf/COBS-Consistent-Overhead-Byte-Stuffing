@@ -1,3 +1,7 @@
+/* Copyright 2011, Jacques Fortier. All rights reserved.
+ *
+ * Redistribution and use in source and binary forms are permitted, with or without modification.
+ */
 #include <stdint.h>
 #include <stddef.h>
 
