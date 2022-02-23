@@ -1,0 +1,8 @@
+mainmenu "Consistent Overhead Byte Stuffing"
+
+menu "COBS"
+
+    config COBS
+    bool "Enable COBS library"
+
+endmenu
