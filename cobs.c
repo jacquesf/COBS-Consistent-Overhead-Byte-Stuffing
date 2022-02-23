@@ -85,3 +85,37 @@ size_t cobs_decode(const uint8_t * restrict input, size_t length, uint8_t * rest
 
     return write_index;
 }
+
+/* Unstuffs "length" bytes of data at the location pointed to by
+ * "data", in-place, over-writing the original.
+ * Returns the number of bytes of the decoded data if it was
+ * successfully unstuffed, and 0 if there was an error unstuffing.
+ *
+ * Remove the "restrict" qualifiers if compiling with a
+ * pre-C99 C dialect.
+ */
+size_t cobs_decode_inplace(uint8_t * restrict data, size_t max_length) {
+    size_t read_index = 0;
+    size_t write_index = 0;
+    uint8_t code, i;
+
+    while (read_index < max_length) {
+        code = data[read_index];
+
+        if (read_index + code > max_length && code != 1) {
+            return 0;
+        }
+
+        read_index++;
+
+        for (i = 1; i < code; i++) {
+            data[write_index++] = data[read_index++];
+        }
+
+        if (code != 0xFF && read_index != max_length) {
+            data[write_index++] = '\0';
+        }
+    }
+
+    return write_index;
+}
