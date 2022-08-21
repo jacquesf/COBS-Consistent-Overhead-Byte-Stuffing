@@ -1,5 +1,3 @@
-mainmenu "Consistent Overhead Byte Stuffing"
-
 menu "COBS"
 
     config COBS
