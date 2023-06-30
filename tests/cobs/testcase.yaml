@@ -1,0 +1,6 @@
+tests:
+  libraries.cobs:
+    min_flash: 34
+    tags: cobs
+    integration_platforms:
+      - native_posix
