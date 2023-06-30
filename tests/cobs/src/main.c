@@ -72,22 +72,23 @@ ZTEST(lib_cobs_test, test_255_bytes_null_end)
 	}
 	buffer[sizeof(buffer) - 1] = 0;
 
-	uint8_t encoded_buffer[257];
-	uint8_t expected_buffer[257];
+	uint8_t encoded_buffer[258];
+	uint8_t expected_buffer[258];
 
 	expected_buffer[0] = 0xFF;
 	for (int i = 0; i < 254; i++) {
 		expected_buffer[i + 1] = i + 1;
 	}
+	expected_buffer[255] = 1;
 	expected_buffer[256] = 1;
 	expected_buffer[257] = 0xAB;
 
-	encoded_buffer[256] = 0xAB;
+	encoded_buffer[257] = 0xAB;
 
 	size_t encoded_length = cobs_encode(buffer, sizeof(buffer), encoded_buffer);
 
 	zassert_mem_equal(encoded_buffer, expected_buffer, sizeof(encoded_buffer));
-	zassert_equal(encoded_length, 256);
+	zassert_equal(encoded_length, 257);
 }
 
 ZTEST(lib_cobs_test, test_hex1_rt)
