@@ -69,8 +69,6 @@ ForEachMacros:
   - 'TYPE_SECTION_FOREACH'
 IfMacros:
   - 'CHECKIF'
-# Disabled for now, see bug https://github.com/zephyrproject-rtos/zephyr/issues/48520
-#IncludeBlocks: Regroup
 IncludeCategories:
   - Regex: '^".*\.h"$'
     Priority: 0
@@ -84,7 +82,6 @@ IndentCaseLabels: false
 IndentWidth: 8
 InsertBraces: true
 SpaceBeforeParens: ControlStatementsExceptControlMacros
-SortIncludes: Never
 UseTab: ForContinuationAndIndentation
 WhitespaceSensitiveMacros:
   - STRINGIFY
