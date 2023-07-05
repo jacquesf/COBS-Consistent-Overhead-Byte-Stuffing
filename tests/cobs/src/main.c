@@ -122,7 +122,7 @@ ZTEST(lib_cobs_test, test_null_two_null_one_rt)
 ZTEST(lib_cobs_test, test_254_bytes_rt)
 {
 	uint8_t buffer[254];
-	for (unsigned int i = 0; i < sizeof(buffer); i++) {
+	for (size_t i = 0; i < sizeof(buffer); i++) {
 		buffer[i] = i + 1;
 	}
 
@@ -132,7 +132,7 @@ ZTEST(lib_cobs_test, test_254_bytes_rt)
 ZTEST(lib_cobs_test, test_254_bytes_null_end_rt)
 {
 	uint8_t buffer[254];
-	for (unsigned int i = 0; i < sizeof(buffer) - 1; i++) {
+	for (size_t i = 0; i < sizeof(buffer) - 1; i++) {
 		buffer[i] = i + 1;
 	}
 	buffer[sizeof(buffer) - 1] = 0;
@@ -143,7 +143,7 @@ ZTEST(lib_cobs_test, test_254_bytes_null_end_rt)
 ZTEST(lib_cobs_test, test_255_bytes_rt)
 {
 	uint8_t buffer[255];
-	for (unsigned int i = 0; i < sizeof(buffer); i++) {
+	for (size_t i = 0; i < sizeof(buffer); i++) {
 		buffer[i] = i % 254 + 1;
 	}
 
@@ -153,7 +153,7 @@ ZTEST(lib_cobs_test, test_255_bytes_rt)
 ZTEST(lib_cobs_test, test_255_bytes_null_end_rt)
 {
 	uint8_t buffer[255];
-	for (unsigned int i = 0; i < sizeof(buffer) - 1; i++) {
+	for (size_t i = 0; i < sizeof(buffer) - 1; i++) {
 		buffer[i] = i + 1;
 	}
 	buffer[sizeof(buffer) - 1] = 0;
@@ -164,7 +164,7 @@ ZTEST(lib_cobs_test, test_255_bytes_null_end_rt)
 ZTEST(lib_cobs_test, test_256_bytes_rt)
 {
 	uint8_t buffer[256];
-	for (unsigned int i = 0; i < sizeof(buffer); i++) {
+	for (size_t i = 0; i < sizeof(buffer); i++) {
 		buffer[i] = i % 254 + 1;
 	}
 
@@ -174,7 +174,7 @@ ZTEST(lib_cobs_test, test_256_bytes_rt)
 ZTEST(lib_cobs_test, test_256_bytes_null_end_rt)
 {
 	uint8_t buffer[256];
-	for (unsigned int i = 0; i < sizeof(buffer) - 1; i++) {
+	for (size_t i = 0; i < sizeof(buffer) - 1; i++) {
 		buffer[i] = i + 1;
 	}
 	buffer[sizeof(buffer) - 1] = 0;
