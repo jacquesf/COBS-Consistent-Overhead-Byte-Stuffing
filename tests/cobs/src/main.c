@@ -12,6 +12,20 @@
 #include <cobs.h>
 #include <cobs/testutils.h>
 
+static void verify_inplace_decoder(const uint8_t *const input_data_, const size_t input_length,
+				   const uint8_t *const reference, const size_t reference_length)
+{
+	uint8_t *const input_data = malloc(input_length);
+	zassert_not_null(input_data);
+	memcpy(input_data, input_data_, input_length);
+
+	const size_t output_length = cobs_decode_inplace(input_data, input_length);
+	zassert_equal(output_length, reference_length);
+	zassert_mem_equal(input_data, reference, reference_length);
+
+	free(input_data);
+}
+
 static void roundtrip_test_runner(const void *input, const size_t length)
 {
 	int ret;
@@ -31,6 +45,8 @@ static void roundtrip_test_runner(const void *input, const size_t length)
 	zassert_equal(decoded_length, length);
 	zassert_mem_equal(decoded_buffer, input, length);
 	zassert_equal(decoded_buffer[length], 0xAB);
+
+	verify_inplace_decoder(encoded_buffer, encoded_length, decoded_buffer, decoded_length);
 
 	uint8_t *const encoded_buffer2 = malloc(encoded_buffer_length);
 	uint8_t *const decoded_buffer2 = malloc(length + 1);
