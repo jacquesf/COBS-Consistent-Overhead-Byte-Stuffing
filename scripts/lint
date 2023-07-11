@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: Apache-2.0
+
+set -xeuo pipefail
+
+script=$(readlink -f "$0")
+scriptpath=$(dirname "$script")
+repo_root=$(git -C "$scriptpath" rev-parse --show-toplevel)
+
+cd "$repo_root"
+
+fd -e h -e c -x clang-format --dry-run -Werror -i
+fd -e py -x black --check
+rg -l0 '^#!/bin/(bash|sh)$' 0<&- | xargs -r0 -I{} sh -c 'echo "{}"; shellcheck -x {}'
+
+echo "All lints passed 🎉"

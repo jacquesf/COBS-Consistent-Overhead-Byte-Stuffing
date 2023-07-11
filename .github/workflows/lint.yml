@@ -1,0 +1,30 @@
+name: Lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - run: sudo apt-get update
+      - run: sudo apt-get install ripgrep fd-find shellcheck
+      - run: echo "PATH=$PATH:/usr/lib/cargo/bin" >> $GITHUB_ENV
+
+      - run: wget https://apt.llvm.org/llvm.sh
+      - run: chmod +x llvm.sh
+      - run: sudo ./llvm.sh
+      - run: sudo apt install clang-format-16
+      - run: sudo ln -s "$(which clang-format-16)" /usr/local/bin/clang-format
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - run: pip3 install -r requirements.txt
+
+      - run: ./scripts/lint
