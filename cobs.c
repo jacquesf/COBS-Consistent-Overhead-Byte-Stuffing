@@ -2,8 +2,8 @@
  *
  * Redistribution and use in source and binary forms are permitted, with or without modification.
  */
-#include <stdint.h>
 #include <stddef.h>
+#include <stdint.h>
 
 /* Stuffs "length" bytes of data at the location pointed to by
  * "input", writing the output to the location pointed to by
@@ -12,38 +12,33 @@
  * Remove the "restrict" qualifiers if compiling with a
  * pre-C99 C dialect.
  */
-size_t cobs_encode(const uint8_t * restrict input, size_t length, uint8_t * restrict output)
+size_t cobs_encode(const uint8_t *restrict input, size_t length, uint8_t *restrict output)
 {
-    size_t read_index = 0;
-    size_t write_index = 1;
-    size_t code_index = 0;
-    uint8_t code = 1;
+	size_t read_index = 0;
+	size_t write_index = 1;
+	size_t code_index = 0;
+	uint8_t code = 1;
 
-    while(read_index < length)
-    {
-        if(input[read_index] == 0)
-        {
-            output[code_index] = code;
-            code = 1;
-            code_index = write_index++;
-            read_index++;
-        }
-        else
-        {
-            output[write_index++] = input[read_index++];
-            code++;
-            if(code == 0xFF)
-            {
-                output[code_index] = code;
-                code = 1;
-                code_index = write_index++;
-            }
-        }
-    }
+	while (read_index < length) {
+		if (input[read_index] == 0) {
+			output[code_index] = code;
+			code = 1;
+			code_index = write_index++;
+			read_index++;
+		} else {
+			output[write_index++] = input[read_index++];
+			code++;
+			if (code == 0xFF) {
+				output[code_index] = code;
+				code = 1;
+				code_index = write_index++;
+			}
+		}
+	}
 
-    output[code_index] = code;
+	output[code_index] = code;
 
-    return write_index;
+	return write_index;
 }
 
 /* Unstuffs "length" bytes of data at the location pointed to by
@@ -55,35 +50,31 @@ size_t cobs_encode(const uint8_t * restrict input, size_t length, uint8_t * rest
  * Remove the "restrict" qualifiers if compiling with a
  * pre-C99 C dialect.
  */
-size_t cobs_decode(const uint8_t * restrict input, size_t length, uint8_t * restrict output)
+size_t cobs_decode(const uint8_t *restrict input, size_t length, uint8_t *restrict output)
 {
-    size_t read_index = 0;
-    size_t write_index = 0;
-    uint8_t code;
-    uint8_t i;
+	size_t read_index = 0;
+	size_t write_index = 0;
+	uint8_t code;
+	uint8_t i;
 
-    while(read_index < length)
-    {
-        code = input[read_index];
+	while (read_index < length) {
+		code = input[read_index];
 
-        if(read_index + code > length && code != 1)
-        {
-            return 0;
-        }
+		if (read_index + code > length && code != 1) {
+			return 0;
+		}
 
-        read_index++;
+		read_index++;
 
-        for(i = 1; i < code; i++)
-        {
-            output[write_index++] = input[read_index++];
-        }
-        if(code != 0xFF && read_index != length)
-        {
-            output[write_index++] = '\0';
-        }
-    }
+		for (i = 1; i < code; i++) {
+			output[write_index++] = input[read_index++];
+		}
+		if (code != 0xFF && read_index != length) {
+			output[write_index++] = '\0';
+		}
+	}
 
-    return write_index;
+	return write_index;
 }
 
 /* Unstuffs "length" bytes of data at the location pointed to by
@@ -91,28 +82,29 @@ size_t cobs_decode(const uint8_t * restrict input, size_t length, uint8_t * rest
  * Returns the number of bytes of the decoded data if it was
  * successfully unstuffed, and 0 if there was an error unstuffing.
  */
-size_t cobs_decode_inplace(uint8_t * data, size_t max_length) {
-    size_t read_index = 0;
-    size_t write_index = 0;
-    uint8_t code, i;
+size_t cobs_decode_inplace(uint8_t *data, size_t max_length)
+{
+	size_t read_index = 0;
+	size_t write_index = 0;
+	uint8_t code, i;
 
-    while (read_index < max_length) {
-        code = data[read_index];
+	while (read_index < max_length) {
+		code = data[read_index];
 
-        if ((read_index + code > max_length) && (code != 1)) {
-            return 0;
-        }
+		if ((read_index + code > max_length) && (code != 1)) {
+			return 0;
+		}
 
-        read_index++;
+		read_index++;
 
-        for (i = 1; i < code; i++) {
-            data[write_index++] = data[read_index++];
-        }
+		for (i = 1; i < code; i++) {
+			data[write_index++] = data[read_index++];
+		}
 
-        if (code != 0xFF && read_index != max_length) {
-            data[write_index++] = '\0';
-        }
-    }
+		if (code != 0xFF && read_index != max_length) {
+			data[write_index++] = '\0';
+		}
+	}
 
-    return write_index;
+	return write_index;
 }
