@@ -2,7 +2,7 @@
 if(CONFIG_COBS)
 
 zephyr_interface_library_named(COBS)
-target_include_directories(COBS INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(COBS INTERFACE include)
 
 zephyr_library()
 zephyr_library_sources(
