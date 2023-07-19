@@ -4,7 +4,12 @@
 #define COBS_STREAM_H_
 
 #include <stdbool.h>
+#if ((KERNEL_VERSION_MAJOR) < 3) || \
+(((KERNEL_VERSION_MAJOR == 3)) && ((KERNEL_VERSION_MINOR) < 1))
+#include <net/buf.h>
+#else
 #include <zephyr/net/buf.h>
+#endif
 
 enum cobs_decode_state {
 	COBS_DECODE_STATE_CODE = 0,
