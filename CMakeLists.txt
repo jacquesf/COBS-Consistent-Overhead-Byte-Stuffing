@@ -8,8 +8,9 @@ target_include_directories(COBS INTERFACE include)
 zephyr_library()
 zephyr_library_sources(
     cobs.c
-    stream.c
 )
+
+zephyr_library_sources_ifdef(CONFIG_COBS_STREAM stream.c)
 
 zephyr_library_link_libraries(COBS)
 target_link_libraries(COBS INTERFACE zephyr_interface)

@@ -3,4 +3,7 @@ menu "COBS"
     config COBS
     bool "Enable COBS library"
 
+    config COBS_STREAM
+    bool "Enable COBS for data streams"
+
 endmenu
