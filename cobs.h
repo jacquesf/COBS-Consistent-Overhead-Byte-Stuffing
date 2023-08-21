@@ -1,7 +1,9 @@
-/* Copyright 2011, Jacques Fortier. All rights reserved.
+/*
+ * Copyright (c) 2011 Jacques Fortier
  *
- * Redistribution and use in source and binary forms are permitted, with or without modification.
+ * SPDX-License-Identifier: MIT
  */
+
 #ifndef COBS_H
 #define COBS_H
 
